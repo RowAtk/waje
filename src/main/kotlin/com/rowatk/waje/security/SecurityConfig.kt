@@ -54,6 +54,7 @@ class SecurityConfig {
             .and()
             .authorizeExchange()
             .pathMatchers(HttpMethod.POST, "/auth/login").permitAll()
+            .pathMatchers("/**").permitAll()
             .anyExchange().authenticated()
             .and()
             .addFilterAt(authFilter, SecurityWebFiltersOrder.AUTHENTICATION)
