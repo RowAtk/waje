@@ -1,13 +1,10 @@
-package com.rowatk.waje.services
+package com.rowatk.waje.components.auth
 
 import com.rowatk.waje.dto.models.UserDTO
 import com.rowatk.waje.dto.models.toDto
-import com.rowatk.waje.repos.user.UserRepo
+import com.rowatk.waje.components.user.UserRepo
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
 
 @Service
 class UserAuthService {

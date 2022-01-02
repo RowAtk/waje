@@ -1,4 +1,4 @@
-package com.rowatk.waje.models
+package com.rowatk.waje.components.address
 
 data class Address(
     val line1: String,

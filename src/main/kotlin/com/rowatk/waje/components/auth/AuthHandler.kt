@@ -1,27 +1,17 @@
 package com.rowatk.waje.handlers
 
-import com.mongodb.internal.connection.Server
-import com.rowatk.waje.dto.incoming.LoginRequest
-import com.rowatk.waje.dto.models.UserDTO
-import com.rowatk.waje.dto.responses.ApiResponse
+import com.rowatk.waje.dto.incomingRequests.LoginRequest
 import com.rowatk.waje.exceptions.ApiException
 import com.rowatk.waje.exceptions.InvalidCredentialsException
-import com.rowatk.waje.exceptions.UserNotFoundException
-import com.rowatk.waje.models.User
 import com.rowatk.waje.security.JwtSupport
-import com.rowatk.waje.services.UserAuthService
-import com.rowatk.waje.services.UserService
+import com.rowatk.waje.components.auth.UserAuthService
+import com.rowatk.waje.components.user.UserService
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.reactor.awaitSingle
-import kotlinx.coroutines.reactor.awaitSingleOrNull
-import org.springframework.http.HttpStatus
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.*
-import org.springframework.web.server.ResponseStatusException
-import java.security.Principal
-import java.util.*
 
 
 @Component
@@ -30,7 +20,8 @@ class AuthHandler(
     private val encoder: PasswordEncoder,
     private val users: ReactiveUserDetailsService,
     private val userService: UserService,
-    private val userAuthService: UserAuthService) {
+    private val userAuthService: UserAuthService
+) {
 
     @FlowPreview
     suspend fun loginHandler(request: ServerRequest) : ServerResponse {

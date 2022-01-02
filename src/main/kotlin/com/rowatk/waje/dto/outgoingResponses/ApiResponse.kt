@@ -1,10 +1,9 @@
-package com.rowatk.waje.dto.responses
+package com.rowatk.waje.dto.outgoingResponses
 
 import com.rowatk.waje.dto.DTO
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
 import java.util.*
-import kotlin.collections.HashMap
 
 class ApiResponse(
     val code: Int = 200,

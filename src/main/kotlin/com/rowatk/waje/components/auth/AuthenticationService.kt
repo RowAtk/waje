@@ -1,7 +1,6 @@
 package com.rowatk.waje.security
 
-import com.rowatk.waje.services.UserService
-import kotlinx.coroutines.reactor.awaitSingle
+import com.rowatk.waje.components.user.UserService
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
 import org.springframework.http.HttpHeaders
@@ -10,8 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange

@@ -1,5 +1,6 @@
-package com.rowatk.waje.models
+package com.rowatk.waje.components.user
 
+import com.rowatk.waje.components.company.Company
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.security.core.GrantedAuthority

@@ -1,4 +1,4 @@
-package com.rowatk.waje.models
+package com.rowatk.waje.components.company
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

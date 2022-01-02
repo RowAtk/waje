@@ -2,7 +2,7 @@ package com.rowatk.waje.exceptions
 
 import com.rowatk.waje.dto.DTO
 import com.rowatk.waje.dto.models.EmptyDTO
-import com.rowatk.waje.dto.responses.ApiResponse
+import com.rowatk.waje.dto.outgoingResponses.ApiResponse
 import java.lang.RuntimeException
 import java.util.*
 

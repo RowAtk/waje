@@ -1,11 +1,12 @@
-package com.rowatk.waje.handlers
+package com.rowatk.waje.api
 
+import com.rowatk.waje.components.user.UserHandler
+import com.rowatk.waje.handlers.AuthHandler
+import com.rowatk.waje.handlers.MiscHandler
 import kotlinx.coroutines.FlowPreview
-import org.intellij.lang.annotations.Flow
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.server.coRouter
-import org.xml.sax.ErrorHandler
 
 
 @Configuration

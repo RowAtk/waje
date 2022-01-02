@@ -1,15 +1,10 @@
-package com.rowatk.waje.handlers
+package com.rowatk.waje.components.user
 
-import com.rowatk.waje.dto.models.UserDTO
-import com.rowatk.waje.dto.models.toDto
-import com.rowatk.waje.models.User
-import com.rowatk.waje.services.UserService
 import com.rowatk.waje.utills.getAuthenticatedUser
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.*
-import reactor.core.publisher.Flux
 
 @Component
 class UserHandler(

@@ -1,4 +1,4 @@
-package com.rowatk.waje.dto.incoming
+package com.rowatk.waje.dto.incomingRequests
 
 import com.rowatk.waje.dto.DTO
 

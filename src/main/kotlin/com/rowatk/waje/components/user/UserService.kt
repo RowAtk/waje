@@ -1,16 +1,11 @@
-package com.rowatk.waje.services
+package com.rowatk.waje.components.user
 
 import com.rowatk.waje.dto.models.CompanyDTO
 import com.rowatk.waje.dto.models.UserDTO
 import com.rowatk.waje.dto.models.toDto
-import com.rowatk.waje.exceptions.ApiException
 import com.rowatk.waje.exceptions.RecordNotFoundException
-import com.rowatk.waje.exceptions.UserNotFoundException
 import com.rowatk.waje.models.Company
-import com.rowatk.waje.models.User
-import com.rowatk.waje.repos.user.UserRepo
 import com.rowatk.waje.utills.getAuthenticatedUser
-import kotlinx.coroutines.reactor.awaitFirst
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono

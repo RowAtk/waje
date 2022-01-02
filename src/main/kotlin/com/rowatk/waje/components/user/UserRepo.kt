@@ -1,4 +1,4 @@
-package com.rowatk.waje.repos.user
+package com.rowatk.waje.components.user
 
 import com.rowatk.waje.models.User
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
