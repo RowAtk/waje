@@ -1,14 +1,14 @@
 package com.rowatk.waje.exceptions
 
 import com.rowatk.waje.dto.DTO
-import com.rowatk.waje.dto.models.EmptyDTO
+import com.rowatk.waje.dto.EmptyDTO
 import com.rowatk.waje.dto.outgoingResponses.ApiResponse
 import java.lang.RuntimeException
 import java.util.*
 
 open class ApiException(
     private val code: Int? = 500,
-    override val message: String?,
+    override val message: String? = "",
     private val result: DTO? = EmptyDTO()
 ) : RuntimeException(message) {
 

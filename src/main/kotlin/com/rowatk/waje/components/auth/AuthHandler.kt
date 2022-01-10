@@ -1,10 +1,10 @@
-package com.rowatk.waje.handlers
+package com.rowatk.waje.components.auth
 
 import com.rowatk.waje.dto.incomingRequests.LoginRequest
 import com.rowatk.waje.exceptions.ApiException
 import com.rowatk.waje.exceptions.InvalidCredentialsException
 import com.rowatk.waje.security.JwtSupport
-import com.rowatk.waje.components.auth.UserAuthService
+import com.rowatk.waje.components.user.UserDTO
 import com.rowatk.waje.components.user.UserService
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.reactor.awaitSingle
@@ -18,7 +18,6 @@ import org.springframework.web.reactive.function.server.*
 class AuthHandler(
     private val jwtSupport: JwtSupport,
     private val encoder: PasswordEncoder,
-    private val users: ReactiveUserDetailsService,
     private val userService: UserService,
     private val userAuthService: UserAuthService
 ) {
@@ -27,7 +26,6 @@ class AuthHandler(
     suspend fun loginHandler(request: ServerRequest) : ServerResponse {
         val loginRequest = request.awaitBody<LoginRequest>();
 //        val user = userAuthService.findByUsername(loginRequest.username) ?: throw NullPointerException()
-//        val user = users.findByUsername(loginRequest.username).awaitSingleOrNull()
 
         try {
             val user = userService.findByUsername(loginRequest.username).awaitSingle()
@@ -46,6 +44,8 @@ class AuthHandler(
         }
 
     }
+
+
 }
 
 data class JWT(val token: String)

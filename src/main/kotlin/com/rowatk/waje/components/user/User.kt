@@ -1,17 +1,17 @@
 package com.rowatk.waje.components.user
 
 import com.rowatk.waje.components.company.Company
+import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
-import javax.management.relation.Role
 
 @Document
 class User(
     @Id
-    val id: String,
+    val id: ObjectId = ObjectId.get(),
     private val username: String,
     private val password: String? = "",
     private val isEnabled: Boolean? = true, //Disabled account can not log in
@@ -19,8 +19,9 @@ class User(
     private val isAccountNonExpired: Boolean? = true, //eg. Demo account（guest） can only be online  24 hours
     private val isAccountNonLocked: Boolean? = true, //eg. Users who malicious attack system,lock their account for one year
 //    private val authorities: MutableCollection<out GrantedAuthority>,
-    val ownedCompanies: List<Company> = Collections.emptyList(),
-    val associatedCompanies: List<Company> = Collections.emptyList(),
+    val email: String,
+    var ownedCompanies: List<Company> = Collections.emptyList(),
+    var associatedCompanies: List<Company> = Collections.emptyList(),
 ) : UserDetails {
 
     // override functions
@@ -33,6 +34,8 @@ class User(
     override fun getUsername(): String {
         return username;
     }
+
+
 
     override fun isAccountNonExpired(): Boolean {
         return isAccountNonExpired!!;
@@ -49,5 +52,10 @@ class User(
     override fun isEnabled(): Boolean {
         return isEnabled!!
     }
+
+    override fun toString(): String {
+        return "User(id=$id, username='$username', password=$password, isEnabled=$isEnabled, isCredentialsNonExpired=$isCredentialsNonExpired, isAccountNonExpired=$isAccountNonExpired, isAccountNonLocked=$isAccountNonLocked, email='$email', ownedCompanies=$ownedCompanies, associatedCompanies=$associatedCompanies)"
+    }
+
 
 }

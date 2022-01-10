@@ -38,28 +38,21 @@ class GlobalErrorWebExceptionHandler(
     private fun renderErrorResponse(request: ServerRequest): Mono<ServerResponse> {
 
         val exception = getError(request)
+        var apiException: ApiException = ApiException(message = exception.message)
 
         if(exception is ApiException) {
-            val apiResponse = exception.getResponse()
-            val errorPropertiesMap = getErrorAttributes(
-                request,
-                ErrorAttributeOptions.defaults()
-            )
-
-            errorPropertiesMap["customMessages"] = apiResponse.messages
-            errorPropertiesMap["customData"] = apiResponse.result
-
-            return ServerResponse.status(apiResponse.code)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(errorPropertiesMap))
+            apiException = exception;
         }
 
-        val errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.defaults())
+        val apiResponse = apiException.getResponse()
 
-        errorPropertiesMap["customMessage"] = exception.message
-        return ServerResponse.status(HttpStatus.BAD_REQUEST)
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromValue(errorPropertiesMap))
+        val errorPropertiesMap = getErrorAttributes(
+            request,
+            ErrorAttributeOptions.defaults()
+        )
+
+        apiResponse.additionalInfo = errorPropertiesMap
+        return apiResponse.buildMonoResponse()
     }
 
 

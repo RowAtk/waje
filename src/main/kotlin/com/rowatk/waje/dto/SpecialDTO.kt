@@ -4,3 +4,5 @@ interface ModelDTO<T> : DTO {
 
     fun toModel() : T;
 }
+
+class EmptyDTO: DTO

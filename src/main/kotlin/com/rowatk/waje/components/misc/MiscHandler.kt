@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.server.ServerResponse
 data class ErrorRequest(
     val code: Int,
     val message: String,
-    val data: Any
+    val data: Any?
 )
 
 @Component

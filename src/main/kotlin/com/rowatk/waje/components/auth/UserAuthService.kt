@@ -1,8 +1,8 @@
 package com.rowatk.waje.components.auth
 
-import com.rowatk.waje.dto.models.UserDTO
-import com.rowatk.waje.dto.models.toDto
+import com.rowatk.waje.components.user.UserDTO
 import com.rowatk.waje.components.user.UserRepo
+import com.rowatk.waje.components.user.toDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -15,6 +15,6 @@ class UserAuthService {
     suspend fun findByUsername(username: String) : UserDTO? {
         val user = userRepo.findByUsername(username).block()
 
-        return user?.toDto();
+        return user?.toDto()
     }
 }

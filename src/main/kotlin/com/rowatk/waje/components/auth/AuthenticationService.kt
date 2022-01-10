@@ -8,6 +8,7 @@ import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter
 import org.springframework.stereotype.Component
@@ -30,7 +31,6 @@ class JwtServerAuthenticationConverter : ServerAuthenticationConverter {
 class JwtAuthenticationManager(
     private val jwtSupport: JwtSupport,
     private val userService: UserService,
-    private val users2: MapReactiveUserDetailsService
     ) : ReactiveAuthenticationManager {
 
     override fun authenticate(authentication: Authentication?): Mono<Authentication> {
@@ -54,7 +54,7 @@ class JwtAuthenticationManager(
 
         if(jwtSupport.isValid(token, user)) {
             println("support says valid")
-            val upToken = UsernamePasswordAuthenticationToken(user!!, user.password)
+            val upToken = UsernamePasswordAuthenticationToken(user!!, user.password, AuthorityUtils.NO_AUTHORITIES)
             println(upToken)
             return upToken
         }
