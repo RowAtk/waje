@@ -18,7 +18,7 @@ class CompanyHandler(
         val company = request.awaitBody<CompanyDTO>()
         val owned: Boolean = extractOwnedParam(request)
 
-        return ApiResponse(result = ObjectIdResponse(userService.addUserCompany(company, owned).awaitSingle()))
+        return ApiResponse(result = ObjectIdResponse(userService.addUserCompany(company, owned)))
             .buildResponse()
     }
 
@@ -27,7 +27,7 @@ class CompanyHandler(
         val id: ObjectId = ObjectId(request.pathVariable("id"))
         val owned: Boolean = extractOwnedParam(request)
 
-        return ApiResponse(result = ObjectIdResponse(userService.editUserCompany(id,company, owned).awaitSingle()))
+        return ApiResponse(result = ObjectIdResponse(userService.editUserCompany(id,company, owned)))
             .buildResponse()
     }
 
@@ -35,7 +35,7 @@ class CompanyHandler(
         val id: ObjectId = ObjectId(request.pathVariable("id"))
         val owned: Boolean = extractOwnedParam(request)
 
-        return ApiResponse(result = ObjectIdResponse(userService.editUserCompany(id, null, owned).awaitSingle()))
+        return ApiResponse(result = ObjectIdResponse(userService.editUserCompany(id, null, owned)))
             .buildResponse()
     }
 

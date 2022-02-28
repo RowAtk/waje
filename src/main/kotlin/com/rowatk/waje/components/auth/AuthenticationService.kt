@@ -49,12 +49,12 @@ class JwtAuthenticationManager(
 
         val username = jwtSupport.getUsername(token)
 //        val user = users2.findByUsername(username).awaitSingleOrNull()
-        val user = userService.findByUsername(username).awaitSingleOrNull()?.toModel()
+        val user = userService.findByUsername(username).toModel()
 //        val user = users.findByUsername(username).awaitSingleOrNull()
 
         if(jwtSupport.isValid(token, user)) {
             println("support says valid")
-            val upToken = UsernamePasswordAuthenticationToken(user!!, user.password, AuthorityUtils.NO_AUTHORITIES)
+            val upToken = UsernamePasswordAuthenticationToken(user, user.password, AuthorityUtils.NO_AUTHORITIES)
             println(upToken)
             return upToken
         }

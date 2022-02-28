@@ -28,7 +28,7 @@ class AuthHandler(
 //        val user = userAuthService.findByUsername(loginRequest.username) ?: throw NullPointerException()
 
         try {
-            val user = userService.findByUsername(loginRequest.username).awaitSingle()
+            val user = userService.findByUsername(loginRequest.username)
 //            TODO: implement encode
 //            if(encoder.matches(loginRequest.password, user.password)) {
             if(loginRequest.password == user.password) {

@@ -1,4 +1,4 @@
-package com.rowatk.waje.handlers
+package com.rowatk.waje.components.misc
 
 import com.rowatk.waje.exceptions.ApiException
 import kotlinx.coroutines.reactor.awaitSingle

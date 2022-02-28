@@ -3,7 +3,8 @@ package com.rowatk.waje.api
 import com.rowatk.waje.components.company.CompanyHandler
 import com.rowatk.waje.components.user.UserHandler
 import com.rowatk.waje.components.auth.AuthHandler
-import com.rowatk.waje.handlers.MiscHandler
+import com.rowatk.waje.components.invoice.InvoiceHandler
+import com.rowatk.waje.components.misc.MiscHandler
 import kotlinx.coroutines.FlowPreview
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -38,6 +39,16 @@ class RouteConfig {
             POST("", companyHandler::addCompanyHandler)
             PUT("/{id}", companyHandler::editCompanyHandler)
             DELETE("/{id}", companyHandler::deleteCompanyHandler)
+        }
+    }
+
+    @Bean
+    @FlowPreview
+    fun invoiceRouter(invoiceHandler: InvoiceHandler) = coRouter {
+        "/invoice".nest {
+            GET("", invoiceHandler::findUserInvoicesHandler)
+            POST("", invoiceHandler::createInvoice)
+            DELETE("/{id}", invoiceHandler::deleteInvoice)
         }
     }
 

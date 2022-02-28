@@ -38,7 +38,7 @@ class GlobalErrorWebExceptionHandler(
     private fun renderErrorResponse(request: ServerRequest): Mono<ServerResponse> {
 
         val exception = getError(request)
-        var apiException: ApiException = ApiException(message = exception.message)
+        var apiException: ApiException = ApiException(message = exception.message ?: "")
 
         if(exception is ApiException) {
             apiException = exception;

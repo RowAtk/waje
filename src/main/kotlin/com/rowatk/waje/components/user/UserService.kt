@@ -10,6 +10,12 @@ import com.rowatk.waje.exceptions.RecordNotFoundException
 import com.rowatk.waje.utills.LoggerDelegate
 import com.rowatk.waje.utills.getAuthenticatedUser
 import com.rowatk.waje.utills.isEqual
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactor.awaitSingle
 import lombok.extern.slf4j.Slf4j
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
@@ -25,7 +31,7 @@ class UserService(
         val log by LoggerDelegate()
     }
 
-    suspend fun addUser(registerRequest: RegisterRequest): Mono<UserDTO> {
+    suspend fun addUser(registerRequest: RegisterRequest): UserDTO {
         return userRepo.findByUsername(registerRequest.username)
             .flatMap { Mono.error<UserDTO>(ApiException(400, "user already exists")) }
             .switchIfEmpty(Mono.defer {
@@ -40,16 +46,18 @@ class UserService(
                     .doOnError { throw ApiException(message = "error adding user") }
                     .map { it.toDto() }
             })
+            .awaitSingle()
     }
 
-    suspend fun getAll(): Flux<UserDTO> {
-        val dbUsers = userRepo.findAll().map { user -> user.toDto() }
+    @FlowPreview
+    fun getAll(): Flow<UserDTO> {
+        val dbUsers = userRepo.findAll().asFlow().map { user -> user.toDto() }
         return dbUsers;
     }
 
-    suspend fun findByUsername(username: String): Mono<UserDTO> {
+    suspend fun findByUsername(username: String): UserDTO {
         val dbUser = userRepo.findByUsername(username)
-        return dbUser.map { it?.toDto() ?: throw RecordNotFoundException(username, "username") }
+        return dbUser.map { it?.toDto() ?: throw RecordNotFoundException(username, "username") }.awaitSingle()
     }
 
     suspend fun getUserCompanies(owned: Boolean): List<CompanyDTO> {
@@ -70,7 +78,7 @@ class UserService(
         return getUserCompanies(false);
     }
 
-    suspend fun addUserCompany(company: CompanyDTO, owned: Boolean): Mono<ObjectId> {
+    suspend fun addUserCompany(company: CompanyDTO, owned: Boolean): ObjectId {
         val user = getAuthenticatedUser();
 
         if (owned) {
@@ -83,17 +91,18 @@ class UserService(
             .doOnSuccess { log.info("Successfully saved company: {}", it) }
             .doOnError { throw ApiException(message = "error adding company") }
             .map { it.id }
+            .awaitSingle()
     }
 
-    suspend fun addUserOwnedCompanies(company: CompanyDTO): Mono<ObjectId> {
+    suspend fun addUserOwnedCompanies(company: CompanyDTO): ObjectId {
         return addUserCompany(company, true)
     }
 
-    suspend fun addUserAssociatedCompanies(company: CompanyDTO): Mono<ObjectId> {
+    suspend fun addUserAssociatedCompanies(company: CompanyDTO): ObjectId {
         return addUserCompany(company, false)
     }
 
-    suspend fun editUserCompany(id: ObjectId, updatedCompany: CompanyDTO?, owned: Boolean): Mono<ObjectId> {
+    suspend fun editUserCompany(id: ObjectId, updatedCompany: CompanyDTO?, owned: Boolean): ObjectId {
 
         var operation: String;
         val user = getAuthenticatedUser()
@@ -125,6 +134,7 @@ class UserService(
                 .doOnSuccess { log.info("Successful $operation of company: {}", it) }
                 .doOnError { throw ApiException(message = "error in company $operation") }
                 .map { it.id }
+                .awaitSingle()
         }
 
         throw RecordNotFoundException(key = CompanyDTO.key, id.toString())
